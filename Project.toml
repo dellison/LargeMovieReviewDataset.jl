@@ -1,0 +1,14 @@
+name = "LargeMovieReviewDataset"
+uuid = "f87704d2-9d9a-11e8-08fc-9d4a23799ec1"
+authors = ["David Ellison <davidehellison@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+DataDeps = "124859b0-ceae-595e-8997-d05f6a7a8dfe"
+
+[extras]
+InteractiveUtils = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test", "InteractiveUtils"]
