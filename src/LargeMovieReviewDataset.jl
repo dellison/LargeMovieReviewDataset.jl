@@ -1,7 +1,8 @@
 module LargeMovieReviewDataset
 
-export review_files, trainfiles, testfiles, allfiles
-export review_id, review_rating
+export
+    review_files, trainfiles, testfiles, allfiles,
+    review_id, review_rating
 
 using DataDeps
 
@@ -10,12 +11,11 @@ const DATASETS = ["train", "test"]
 const RX = r"([0-9]+?)_([0-9]+?)\.txt$"
 
 rootdir() = datadep"LargeMovieReviewDataset"
-
 basedir() = joinpath(rootdir(), "aclImdb")
 
 readme() = joinpath(basedir(), "README")
 
-review_id(review) = Meta.parse(match(RX, review).captures[1])
+review_id(review) = parse(Int, match(RX, review).captures[1])
 
 function review_rating(review)
     rating = Meta.parse(match(RX, review).captures[2])
