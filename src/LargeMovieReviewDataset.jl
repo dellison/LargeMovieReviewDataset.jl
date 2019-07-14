@@ -19,11 +19,7 @@ review_id(review) = parse(Int, match(RX, review).captures[1])
 
 function review_rating(review)
     rating = Meta.parse(match(RX, review).captures[2])
-    if rating == 0
-        return missing
-    else
-        return rating
-    end
+    rating == 0 ? missing : rating
 end
 
 function review_files(;datasets=["train","test"], labels=["neg","pos"])
