@@ -15,14 +15,29 @@ basedir() = joinpath(rootdir(), "aclImdb")
 
 readme() = joinpath(basedir(), "README")
 
-review_id(review) = parse(Int, match(RX, review).captures[1])
+"""
+    review_id(review_file)
 
-function review_rating(review)
-    rating = Meta.parse(match(RX, review).captures[2])
+Return the review's unique id number.
+"""
+review_id(review_file) = parse(Int, match(RX, review_file).captures[1])
+
+"""
+    review_rating(review_file)
+
+Return the review's numerical rating.
+"""
+function review_rating(review_file)
+    rating = Meta.parse(match(RX, review_file).captures[2])
     rating == 0 ? missing : rating
 end
 
-function review_files(;datasets=["train","test"], labels=["neg","pos"])
+"""
+    review_files(;datasets=["train","test"], labels=["neg","pos"])
+
+Return a vector of movie review files, filtered by `datasets` and `labels`.
+"""
+function review_files(;datasets=DATASETS, labels=LABELS)
     @assert all(set in DATASETS for set in datasets)
     @assert all(label in LABELS for label in labels)
     base, files =  basedir(), []
@@ -37,8 +52,18 @@ function review_files(;datasets=["train","test"], labels=["neg","pos"])
     return files
 end
 
-allfiles() = review_files(labels=LABELS, datasets=DATASETS)
+"""
+    trainfiles(;labels=["neg", "pos"])
+
+Return a vector of movie review files from the training set.
+"""
 trainfiles(;labels=["neg","pos"]) = review_files(datasets=["train"], labels=labels)
+
+"""
+    testfiles(;labels=["neg", "pos"])
+
+Return a vector of movie review files from the test set.
+"""
 testfiles(;labels=["neg","pos"])  = review_files(datasets=["test"], labels=labels)
 
 function __init__()
@@ -52,6 +77,5 @@ function __init__()
                      "c40f74a18d3b61f90feba1e17730e0d38e8b97c05fde7008942e91923d1658fe",
                      post_fetch_method = unpack))
 end
-
 
 end # module

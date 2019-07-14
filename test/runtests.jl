@@ -1,8 +1,7 @@
 using LargeMovieReviewDataset, Test
 
-
 @testset "LargeMovieReviewDataset.jl" begin
-    all_reviews = allfiles()
+    all_reviews = review_files()
     @test length(all_reviews) == 100_000
 
     unlabeled_reviews = review_files(labels=["unsup"])
