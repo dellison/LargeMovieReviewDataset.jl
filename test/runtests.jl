@@ -18,7 +18,10 @@ using LargeMovieReviewDataset, Test
     @test all(r -> 1 <= review_rating(r) <= 10, train)
     @test all(r -> 1 <= review_rating(r) <= 10, test)
 
+    isnum = x -> typeof(x) <: Number
     for reviews in (all_reviews, trainfiles(), testfiles(), unlabeled_reviews, labeled_reviews)
         @test all(isfile, reviews)
+        @test all(isnum ∘ review_id, reviews)
     end
+    @test isfile(LargeMovieReviewDataset.readme())
 end
